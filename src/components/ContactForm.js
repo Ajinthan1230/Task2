@@ -119,6 +119,7 @@ const ContactForm = () => {
                         value={values.email}
                         onChange={handleInputChange}
                     />
+
                 </div>
             </div>
             <div className="form-group">

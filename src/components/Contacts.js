@@ -8,22 +8,17 @@ const Contacts = () => {
         if(localStorage.getItem('users') !== null){
             var retrievedData = localStorage.getItem("users");
             var details = JSON.parse(retrievedData);
-            /*
-            {details.map((user,key) => {
-                    <tr key={key}>
-                        <td>{user.id}</td>
-                        <td>{user.FName}</td>
-                        <td>{user.LName}</td>
-                        <td>{user.mobile}</td>
-                        <td>{user.address}</td>
-                    </tr>
-            })}
-            */
+            return details;
+            
+            
         }else{
             alert("No data available");
         }
+        
     }
 
+    var userData = List();
+    
     return(
         <div style={{marginLeft:100 }}>
             <div>
@@ -36,32 +31,44 @@ const Contacts = () => {
                     <ContactForm/>
                 </div>
             </div>
+            <p>List Of Contacts</p>
             <div className="row">
-                        <p>List Of Contacts</p>
-                        <button onClick={List}>List now</button>
+                        
+                        
                 <table>
-                    
-                    <tr>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Mobile Number</td>
-                        <td>Email ID</td>
-                        <td>Address</td>
-                        <td>Edit</td>
-                        <td>Delete</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <td>First Name</td>
+                            <td>Last Name</td>
+                            <td>Address</td>
+                            <td>Mobile Number</td>
+                            <td>Email ID</td>
+                            <td>Edit</td>
+                            <td>Delete</td>
+                        </tr>
+                    </thead>
                     <tbody>
-                        {List.details.map((user,key) => {
+                    {userData.map((user,key) => {
                             return(
                                 <tr>
-                                    <td>{user.id}</td>
-                                    <td>{user.FName}</td>
-                                    <td>{user.LName}</td>
-                                    <td>{user.mobile}</td>
-                                    <td>{user.address}</td>
-                                </tr>
+                                <td>{user.FName}</td>
+                                <td>{user.LName}</td>
+                                <td>{user.address}</td>
+                                <td>{user.mobile}</td>
+                                <td>{user.id}</td>
+                                
+                              
+                                <td><i class="btn fas fa-pen"></i></td>
+
+                                <td><i class="btn fas fa-trash" onClick={() => {
+                                    let backup = JSON.parse(localStorage.getItem("users"));
+                                    backup.splice(key, 1);
+                                    localStorage.removeItem("users");
+                                    localStorage.setItem("users",JSON.stringify(backup));
+                                    alert("Delete Success")
+                                }}></i></td>
+                            </tr>
                             )
-                        
                         })}
                     </tbody>
                 </table>
